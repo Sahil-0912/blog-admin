@@ -1,0 +1,109 @@
+<%- include('../layouts/Headsection') -%>
+
+    <body>
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+
+        <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+            data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+            <%- include('../layouts/Header') -%>
+                <%- include('../layouts/Sidebar') -%>
+
+                    <div class="page-wrapper">
+
+                        <div class="page-breadcrumb">
+                            <div class="row">
+                                <div class="col-12 d-flex no-block align-items-center">
+                                    <!-- <h4 class="page-title">Dashboard</h4> -->
+                                    <div class="ms-auto text-end">
+                                        <nav aria-label="breadcrumb">
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">
+                                                    Add
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <!-- ============================================================== -->
+                            <!-- Start Page Content -->
+                            <!-- ============================================================== -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <form class="form-horizontal" method="post" action="/api/blog" enctype="multipart/form-data">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Add Blog</h4>
+                                                <div class="form-group row">
+                                                    <label for="fname"
+                                                        class="col-sm-3 text-end control-label col-form-label">Blog
+                                                        Name</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="blog_name"
+                                                            id="fname" placeholder="Blog Name " />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="fname"
+                                                        class="col-sm-3 text-end control-label col-form-label">Blog
+                                                        Price</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="blog_price" class="form-control"
+                                                            id="fname" placeholder="Blog Price " />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="cono1"
+                                                        class="col-sm-3 text-end control-label col-form-label">Blog
+                                                        Description</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea class="form-control" placeholder="Blog Description" name="blog_desc"></textarea>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 text-end control-label col-form-label">File Upload</label>
+                                                    <div class="col-md-9">
+                                                      <div class="custom-file">
+                                                        <input
+                                                          type="file"
+                                                          class="custom-file-input"
+                                                          id="validatedCustomFile"
+                                                          name="blog_img"
+                                                          required
+                                                        />
+                                                      </div>
+                                                    </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="card-body">
+                                                    <button class="btn btn-danger">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <footer class="footer text-center">
+                                        All Rights Reserved by Matrix-admin. Designed and Developed by
+                                        <a href="https://www.wrappixel.com">WrapPixel</a>.
+                                    </footer>
+
+                                </div>
+
+                            </div>
+
+                            <%- include('../layouts/jslink') -%>
+
+    </body>
+
+    </html>
