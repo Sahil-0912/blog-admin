@@ -1,4 +1,6 @@
+const sendemail = require("../config/mail")
 const admin = require("../model/Admin.Model")
+const otpGenerator = require('otp-generator')
 const { PlaintoHash, HashToPlain } = require("../utils/password")
 
 exports.register = async (req, res) => {
@@ -16,6 +18,7 @@ exports.register = async (req, res) => {
             //     success: true,
             //     message: "Inserted.........."
             // })
+            req.flash("info", "your registration successfully..!")
             res.redirect('/login')
         }
 
@@ -112,5 +115,22 @@ exports.changepassword = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+    }
+}
+
+
+exports.forgetpassword = async (req, res) => {
+    // console.log(req.body);
+    const { email } = req.body
+    const existemail = await admin.findOne({ email }).countDocuments().exec()
+    if (existemail > 0) {
+        // const otp = Math.floor(Math.random() * 1000000)
+        var otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+        await sendemail(email, 'forget password', `${otp}`)
+        req.flash("info", "check your email")
+        res.redirect('/login')
+    } else {
+        req.flash("info", "email dose not exist")
+        res.redirect('/login')
     }
 }

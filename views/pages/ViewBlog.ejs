@@ -24,7 +24,7 @@
                                         <nav aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Add</li>
+                                                <li class="breadcrumb-item active" aria-current="page">View</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -41,6 +41,7 @@
                                             <th scope="col">Blog Name</th>
                                             <th scope="col">Blog Price</th>
                                             <th scope="col">Blog Description</th>
+                                            <th scope="col">Blog Category</th>
                                             <th scope="col">Blog Img</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -61,14 +62,19 @@
                                                     <%= blog.blog_desc %>
                                                 </td>
                                                 <td>
+                                                    <%= blog.blog_cat %>
+                                                </td>
+                                                <td>
                                                     <img src="/public/<%= blog.blog_img %>" alt="Blog Image"
                                                         style="max-width: 100px; height: auto;" />
                                                 </td>
                                                 <td>
                                                     <a href="/api/blog/<%= blog._id %>"
-                                                        class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
+                                                        class="btn btn-outline-danger"><i
+                                                            class="fa-solid fa-trash"></i></a>
                                                     <a href="/UpdateBlog?id=<%= blog._id %>"
-                                                        class="btn btn-outline-warning mx-2"><i class="fa-solid fa-pen"></i></a>
+                                                        class="btn btn-outline-warning mx-2"><i
+                                                            class="fa-solid fa-pen"></i></a>
                                                 </td>
                                             </tr>
                                             <% }) %>

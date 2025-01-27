@@ -1,9 +1,9 @@
 const Blog = require("../model/Blog.Model")
 
 exports.store = async (req, res) => {
-    const { blog_name, blog_price, blog_desc } = req.body
+    const { blog_name, blog_price, blog_desc, blog_cat } = req.body
     try {
-        if (blog_name == "" || blog_price == "" || blog_desc == "") {
+        if (blog_name == "" || blog_price == "" || blog_desc == "", blog_cat == "") {
             res.json("all fields are required")
         } else {
             // console.log(req.file.filename)
@@ -11,6 +11,7 @@ exports.store = async (req, res) => {
                 blog_name,
                 blog_price,
                 blog_desc,
+                blog_cat,
                 blog_img: req.file.filename
             })
             if (blog) {
@@ -27,7 +28,7 @@ exports.trash = async (req, res) => {
     try {
         const { id } = req.params
         await Blog.findByIdAndDelete(id)
-        res.json("deleted............")
+        res.redirect('/ViewBlog')
     } catch (error) {
         res.json(error)
     }
@@ -36,7 +37,7 @@ exports.trash = async (req, res) => {
 exports.edit = async (req, res) => {
     try {
         const { id } = req.params
-        const { blog_name, blog_price, blog_desc } = req.body
+        const { blog_name, blog_price, blog_desc, blog_cat } = req.body
         var image = ''
         if (req.file) {
             image = req.file.filename
@@ -48,7 +49,7 @@ exports.edit = async (req, res) => {
                 _id: id
             },
             {
-                blog_name, blog_price, blog_desc, blog_img: image
+                blog_name, blog_price, blog_desc, blog_cat, blog_img: image
             })
         // res.json("updated....")
         res.redirect('/ViewBlog')

@@ -2,6 +2,9 @@ const express = require('express')
 const path = require('path')
 const app = express()
 const cookieParser = require('cookie-parser')
+const flash = require('express-flash')
+const session = require('express-session')
+
 require('dotenv').config()
 const PORT = process.env.PORT || 8000
 
@@ -9,6 +12,17 @@ const PORT = process.env.PORT || 8000
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+
+app.use(express.static('public'))
+app.use(cookieParser())
+app.use(session(
+    {
+        secret: "my secret key",
+        resave: false,
+        saveUninitialized: true
+    }
+))
+app.use(flash())
 
 app.use(express.static('public'))
 app.use('/public', express.static('uploads'));

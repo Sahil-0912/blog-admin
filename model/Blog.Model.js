@@ -17,6 +17,12 @@ const BlogSchema = new Schema({
         required: true,
         trim: true
     },
+    blog_cat: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
     blog_img: {
         type: String
     }

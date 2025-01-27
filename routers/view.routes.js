@@ -37,7 +37,7 @@ router.get('/register', (req, res) => {
     res.render('Pages/register')
 })
 router.get('/login', (req, res) => {
-    res.render('Pages/login')
+    res.render('Pages/login', { message: req.flash('info') })
 })
 router.get('/logout', (req, res) => {
     res.clearCookie('admin')
@@ -53,7 +53,7 @@ router.get('/MyProfile', async (req, res) => {
 
 router.get('/ChangePassword', (req, res) => {
     const email = req?.cookies.admin.email
-    res.render('Pages/ChangePassword',{email})
+    res.render('Pages/ChangePassword', { email })
 })
 
 
