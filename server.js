@@ -33,8 +33,8 @@ app.set('view engine', 'ejs')
 
 
 const BlogRoute = require('./routers/Blog.Routers')
-const viewroute = require('./routers/view.routes')
-const adminroute = require('./routers/Admin.ROuter')
+const viewroute = require('./routers/View.Routes')
+const adminroute = require('./routers/Admin.Router')
 
 
 app.use('/', viewroute)

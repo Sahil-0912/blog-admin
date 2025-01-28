@@ -1,33 +1,30 @@
 const { Schema, model } = require("mongoose");
 
+const common = {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+}
+
 const BlogSchema = new Schema({
     blog_name: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+        ...common
     },
     blog_price: {
-        type: String,
-        required: true,
-        trim: true
+        ...common,
+        type: Number
     },
     blog_desc: {
-        type: String,
-        required: true,
-        trim: true
+        ...common,
+        unique: false
     },
     blog_cat: {
-        type: String,
-        required: true,
-        trim: true
+        ...common,
     },
-
     blog_img: {
-        type: String
+        ...common,
     }
-}, {
-    timestamps: true
 })
 
 const Blog = model('Blogs', BlogSchema)
