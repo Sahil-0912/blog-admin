@@ -22,6 +22,8 @@ app.use(session(
         saveUninitialized: true
     }
 ))
+
+
 app.use(flash())
 
 app.use(express.static('public'))
@@ -29,12 +31,18 @@ app.use('/public', express.static('uploads'));
 
 app.set('view engine', 'ejs')
 
+const passport = require('passport')
+const passportAuth = require('./config/Passport')
+passportAuth(passport)
 
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 const BlogRoute = require('./routers/Blog.Routers')
-const viewroute = require('./routers/View.Routes')
 const adminroute = require('./routers/Admin.Router')
+const viewroute = require('./routers/View.Routes')
+
 
 
 app.use('/', viewroute)

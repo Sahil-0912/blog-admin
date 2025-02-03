@@ -1,10 +1,12 @@
 const router = require('express').Router()
 
-const sendemail = require('../config/mail')
+const passport = require('passport')
+
 const AdminController = require('../controller/Admin.Controller')
 const upload = require('../middleware/uploadfile')
 router.post('/register', AdminController.register)
-router.post('/login', AdminController.login)
+// router.post('/login', AdminController.login)
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login',successRedirect:'/' })),
 router.post('/updateprofile', upload.single('admin_profile'), AdminController.updateprofile)
 router.post('/changepassword', AdminController.changepassword)
 router.post('/forgetpassword', AdminController.forgetpassword)
