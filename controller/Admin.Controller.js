@@ -3,60 +3,85 @@ const admin = require("../model/Admin.Model")
 const otpGenerator = require('otp-generator')
 const { PlaintoHash, HashToPlain } = require("../utils/password")
 
-exports.register = async (req, res) => {
-    try {
-        // console.log(req.body);
+// exports.register = async (req, res) => {
+//     try {
+//         // console.log(req.body);
 
-        const { username, email, password, confirm_password } = req.body
-        const existemail = await admin.findOne({ email: email }).countDocuments().exec()
-        if (existemail > 0) {
-            res.json("Email is allready exist")
+//         const { username, email, password, confirm_password } = req.body
+//         const existemail = await admin.findOne({ email: email }).countDocuments().exec()
+//         if (existemail > 0) {
+//             res.json("Email is allready exist")
+//         } else {
+//             const hash = await PlaintoHash(password)
+//             const Admin = await admin.create({ username, email, password: hash, confirm_password })
+//             res.josn({
+//                 success: true,
+//                 message: "Inserted.........."
+//             })
+//             req.flash("info", "your registration successfully..!")
+//             res.redirect('/login')
+//         }
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+exports.register = async (req, res) => {
+
+    try {
+        const { username, email, password, confirm_password  } = req.body
+        const existEmail = await admin.findOne({ email }).countDocuments().exec()
+        if (existEmail > 0) {
+            req.flash('info', "email id is all ready exist")
+            res.redirect('/register')
         } else {
-            const hash = await PlaintoHash(password)
-            const Admin = await admin.create({ username, email, password: hash, confirm_password })
-            // res.josn({
-            //     success: true,
-            //     message: "Inserted.........."
-            // })
-            req.flash("info", "your registration successfully..!")
+            req.flash('info', "registration succesfully...!")
+            const hash_pass = await PlaintoHash(password)
+            console.log("hash_pass..........");
+            console.log(hash_pass)
+            await admin.create({
+                username, email, password:hash_pass, confirm_password
+            })
             res.redirect('/login')
         }
-
     } catch (error) {
-        console.log(error);
+        res.render(error)
     }
 }
 
-exports.login = async (req, res) => {
-    try {
-        const { email, password } = req.body
+// exports.login = async (req, res) => {
+//     try {
+//         const { email, password } = req.body
 
-        const existemail = await admin.findOne({ email }).countDocuments().exec()
-        if (existemail > 0) {
-            const exisstuser = await admin.findOne({ email })
-            console.log(exisstuser);
+//         const existemail = await admin.findOne({ email }).countDocuments().exec()
+//         if (existemail > 0) {
+//             const exisstuser = await admin.findOne({ email })
+//             console.log(exisstuser);
 
-            const matchpwd = await HashToPlain(password, exisstuser.password)
-            if (matchpwd) {
-                const payload = {
-                    username: exisstuser.username,
-                    email: exisstuser.email,
-                    admin_profile: exisstuser.req?.file.filename
-                }
-                res.cookie('admin', payload, { httpOnly: true })
-                res.redirect('/')
-            } else {
-                res.json("password did not matched..")
-            }
+//             const matchpwd = await HashToPlain(password, exisstuser.password)
+//             if (matchpwd) {
+//                 const payload = {
+//                     username: exisstuser.username,
+//                     email: exisstuser.email,
+//                     admin_profile: exisstuser.req?.file.filename
+//                 }
+//                 res.cookie('admin', payload, { httpOnly: true })
+//                 res.redirect('/')
+//             } else {
+//                 // res.json("password did not matched..")
+//                 req.flash("info", "password does not macth..!")
+//             }
 
-        } else {
-            res.json("email id is not exist....")
-        }
-    } catch (error) {
-        console.log(error);
+//         } else {
+//             // res.json("email id is not exist....")
+//             req.flash("info", "email id does not exist..!")
+//         }
+//     } catch (error) {
+//         console.log(error);
 
-    }
-}
+//     }
+// }
 
 exports.updateprofile = async (req, res) => {
     try {
@@ -136,6 +161,6 @@ exports.forgetpassword = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        
+
     }
 }

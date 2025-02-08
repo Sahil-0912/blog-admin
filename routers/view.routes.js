@@ -34,7 +34,7 @@ router.get('/UpdateBlog', matchLogin, async (req, res) => {
 })
 
 router.get('/register', (req, res) => {
-    res.render('Pages/register')
+    res.render('Pages/register', { message: req.flash('info') })
 })
 router.get('/login', (req, res) => {
     res.render('Pages/login', { message: req.flash('info') })
