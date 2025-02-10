@@ -5,13 +5,13 @@ const { matchLogin } = require('../utils/login.middleware')
 const router = require('express').Router()
 router.get('/', matchLogin, (req, res) => {
     // res.render('pages/index')
-    res.render('Pages/index')
+    res.render('pages/index')
 })
 router.get('/AddBlog', matchLogin, (req, res) => {
     // res.render('pages/AddBlog', {
     //     title: "AddBlog"
     // })
-    res.render('Pages/AddBlog')
+    res.render('pages/AddBlog')
 
 })
 
@@ -34,10 +34,10 @@ router.get('/UpdateBlog', matchLogin, async (req, res) => {
 })
 
 router.get('/register', (req, res) => {
-    res.render('Pages/register', { message: req.flash('info') })
+    res.render('pages/register', { message: req.flash('info') })
 })
 router.get('/login', (req, res) => {
-    res.render('Pages/login', { message: req.flash('info') })
+    res.render('pages/login', { message: req.flash('info') })
 })
 router.get('/logout', (req, res) => {
     req.logout(function (err) {
@@ -48,16 +48,16 @@ router.get('/logout', (req, res) => {
 router.get('/MyProfile', async (req, res) => {
     const email = req.user.email
     const singleadmin = await admin.findOne({ email })
-    res.render('Pages/MyProfile', { admin: singleadmin })
+    res.render('pages/MyProfile', { admin: singleadmin })
 })
 
 router.get('/ChangePassword', (req, res) => {
     const email = req?.user?.email
-    res.render('Pages/ChangePassword', { email })
+    res.render('pages/ChangePassword', { email })
 })
 
 router.get('/updatepassword', async (req, res) => {
-    res.render('Pages/updatepassword', { message: req.flash("info") })
+    res.render('pages/updatepassword', { message: req.flash("info") })
 })
 
 
