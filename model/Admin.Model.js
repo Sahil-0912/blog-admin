@@ -15,6 +15,9 @@ const adminschema = new Schema({
     },
     admin_profile: {
         type: String
+    },
+    token: {
+        type: String
     }
 }, {
     timestamps: true

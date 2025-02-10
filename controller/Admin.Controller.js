@@ -142,25 +142,52 @@ exports.changepassword = async (req, res) => {
         console.log(error);
     }
 }
-
-
 exports.forgetpassword = async (req, res) => {
-    try {
-        // console.log(req.body);
-        const { email } = req.body
-        const existemail = await admin.findOne({ email }).countDocuments().exec()
-        if (existemail > 0) {
-            // const otp = Math.floor(Math.random() * 1000000)
-            var otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
-            await sendemail(email, 'forget password', `${otp}`)
-            req.flash("info", "check your email")
+    const { email } = req.body
+
+    const existemail = await admin.findOne({ email }).countDocuments().exec()
+
+    if (existemail > 0) {
+        var otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+        await sendemail(email, 'forgetpassword',`${otp}`)
+        const Admin = await admin.updateOne({ email }, { token: otp })
+        req.flash('info', 'check your email')
+        res.redirect('/login')
+    } else {
+        req.flash('info', "email dose not exist")
+        res.redirect('/login')
+    }
+}
+
+exports.updatepassword = async (req, res) => {
+    console.log(req.body);
+
+    const { token, password, confirm_pass } = req.body
+
+    const existtoken = await admin.findOne({ token }).countDocuments().exec()
+
+    if (existtoken) {
+        if (password === confirm_pass) {
+            const hash_pass = await PlaintoHash(password)
+            const Admin = await admin.findOne({ token })
+            await admin.findByIdAndUpdate(
+                {
+                    _id: Admin._id
+                },
+                {
+                    password: hash_pass,
+                    token: ""
+                }
+            )
+            req.flash("info", "your password updated....")
             res.redirect('/login')
         } else {
-            req.flash("info", "email dose not exist")
-            res.redirect('/login')
+            req.flash("info", "confirm password not match...")
+            res.redirect('/updatepassword')
         }
-    } catch (error) {
-        console.log(error);
-
+    } else {
+        req.flash("info", "token incorrect")
+        res.redirect('/updatepassword')
     }
+
 }

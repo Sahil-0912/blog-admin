@@ -10,6 +10,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 router.post('/updateprofile', upload.single('admin_profile'), AdminController.updateprofile)
 router.post('/changepassword', AdminController.changepassword)
 router.post('/forgetpassword', AdminController.forgetpassword)
+router.post('/updatepassword',AdminController.updatepassword)
 
 
 // router.get('/sendemail', async (req, res) => {

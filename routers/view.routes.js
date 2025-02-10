@@ -56,5 +56,9 @@ router.get('/ChangePassword', (req, res) => {
     res.render('Pages/ChangePassword', { email })
 })
 
+router.get('/updatepassword', async (req, res) => {
+    res.render('Pages/updatepassword', { message: req.flash("info") })
+})
+
 
 module.exports = router
