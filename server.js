@@ -41,7 +41,7 @@ app.use(passport.session())
 
 const BlogRoute = require('./routers/Blog.Routers')
 const adminroute = require("./routers/Admin.Routes")
-const viewroute = require('./routers/View.Routes')
+const viewroute = require('./routers/ViewRoutes')
 
 
 
